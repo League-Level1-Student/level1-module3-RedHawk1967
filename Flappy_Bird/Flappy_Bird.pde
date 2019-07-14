@@ -12,15 +12,17 @@ boolean intersectsPipes() {
   }
 }
 
-
+keyPressed()
 void setup() {  
   size(1000, 1000);
- back = loadImage("flappyBackground.jpg");
-            pipeBottom = loadImage("bottomPipe.png");
-            pipeTop = loadImage("topPipe.png");
-            bird = loadImage("bird.png");
+ 
+ back = loadImage("flappy bird background.png");
+            pipeBottom = loadImage("mario pipe.png");
+            pipeTop = loadImage("pipeDown.png");
+            bird = loadImage("flappy bird star.jpg");
             bird.resize(50,50);
-
+  back.resize(1000,1000);
+  pipeTop.resize(200,pipe1Height);
 }
 void checkTeleport() { 
   if (pipex<-200) {
@@ -32,11 +34,11 @@ Score++;
 
 
 void teleport() {
-
+ 
   pipex=1000;
   pipe1Height = (int) random(100, 500);
   pipey = pipe1Height+ pipeGap;
-  
+ pipeTop.resize(200,pipe1Height); 
 }
 
 int Score = 0;
@@ -57,28 +59,34 @@ void draw() {
   }
  background(back);
             image (pipeBottom,250,375);
-            image (pipeTop,250,-130);
-            image (bird, 250, 300);
+
+            image (pipeTop,pipex,0);
+            image (bird, birdx, birdy,50,50);
 
  
+ 
+ 
+ //bird
   fill(255, 226, 0);
   stroke(255, 123, 15);
-  ellipse(birdx, birdy, 70, 70);
+ 
+ ellipse(birdx, birdy, 70, 70);
   if (birdyVelocity<100) {
     birdyVelocity += gravity;
   }
 
   birdy += birdyVelocity; 
   //pipe 1
-  fill(0, 255, 0);
-  rect(pipex, 0, 200, pipe1Height);
+  //fill(0, 255, 0);
+  //rect(pipex, 0, 200, pipe1Height);
   //pipe 2
   fill(0, 255, 0);
   rect(pipex, pipey, 200, 1000);
   pipex-=2; 
-  if (mousePressed) {
+  if (mousePressed||keyCode==32) {
     birdyVelocity=-13;
   }
+  
   checkTeleport();
   fill(255, 0, 0);
   textSize(35);
@@ -94,4 +102,7 @@ void draw() {
   if (birdy<=0) {
     birdyVelocity = Math.min((int)(-birdyVelocity*1.1), 100);
   }
+//check if bird broke
+if(birdy>=1100){exit();
+}
 }
