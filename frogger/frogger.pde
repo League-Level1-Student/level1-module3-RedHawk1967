@@ -52,8 +52,15 @@ int speed ;
 void move() { 
 x-=speed;
 if(x>=width||x<=0){
-x = 800;
+car.random();
+};
 }
+
+void random{
+speed = random(-5,10)
+}
+  
+
 
 }
 
